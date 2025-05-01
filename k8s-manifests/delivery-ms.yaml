@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: delivery-ms
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: delivery-ms
+  template:
+    metadata:
+      labels:
+        app: delivery-ms
+    spec:
+      containers:
+        - name: delivery-ms
+          image: queengarcia/delivery-ms:latest
+          ports:
+            - containerPort: 8083
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: delivery-ms
+  namespace: default
+spec:
+  type: LoadBalancer
+  selector:
+    app: delivery-ms
+  ports:
+    - protocol: TCP
+      port: 80 # Port that the service exposes (can be different from the container port)
+      targetPort: 8083 #change for microservice (Port the application listens on inside the container)
