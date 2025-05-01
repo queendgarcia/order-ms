@@ -53,9 +53,18 @@ pipeline {
                         --region ${AWS_REGION} \
                         --name ${EKS_CLUSTER_NAME}
     
-                      # Apply manifests
+                      # Apply manifests (order-ms)
                       kubectl apply -f k8s-manifests/deployment.yaml
                       kubectl apply -f k8s-manifests/service.yaml
+                      
+                      # For Payment-MS (Deployment & Service in one file)
+                      kubectl apply -f k8s-manifests/payment-ms.yaml
+                      
+                      # For Stock-MS (Deployment & Service in one file)
+                      kubectl apply -f k8s-manifests/stock-ms.yaml
+                      
+                       # For Delivery-MS (Deployment & Service in one file)
+                      kubectl apply -f k8s-manifests/delivery-ms.yaml
                   """
               }
             }
